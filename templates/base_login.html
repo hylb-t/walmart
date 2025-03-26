@@ -48,9 +48,10 @@
                             <span class="d-none d-lg-block">沃尔玛销量的数据分析推荐系统</span>
                         </a>
                     </div><!-- End Logo -->
+                    {% block content %}
 
-                    <div class="card mb-3">
-                        {% block content %}
+                        <div class="card mb-3">
+
 
                             <div class="card-body">
 
@@ -59,7 +60,7 @@
                                     <p class="text-center small">输入用户名和密码</p>
                                 </div>
 
-                                <form class="row g-3 needs-validation" novalidate>
+                                <form method="post" action="{% url 'login' %}" class="row g-3 needs-validation" novalidate>
 
                                     <div class="col-12">
                                         <label for="yourUsername" class="form-label">用户名</label>
@@ -91,15 +92,16 @@
                                         <button class="btn btn-primary w-100" type="submit">登录</button>
                                     </div>
                                     <div class="col-12">
-                                        <p class="small mb-0">还没有账号？<a href="(% url 'register' %)">创建账号</a></p>
+                                        <p class="small mb-0">还没有账号？<a href="{% url 'register' %}">创建账号</a></p>
                                     </div>
                                 </form>
 
                             </div>
-                            </div>
-                        {% endblock %}
+                        </div>
 
-                </div>
+
+                        </div>
+                    {% endblock %}
 
             </div>
         </div>
