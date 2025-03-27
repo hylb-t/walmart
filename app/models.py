@@ -8,7 +8,7 @@ class User(models.Model):
     sex = models.CharField("性别",max_length=255,default='')
     address = models.CharField("地址",max_length=255,default='')
     avatar = models.CharField("头像",max_length=255,default='avatar/default.jpg')
-    textarea = models.TextField("个性签名",max_length=255,default='')
+    textarea = models.TextField("个性签名",max_length=255,default='这个人很懒，什么都没有留下')
     creatname = models.DateField("创建时间", auto_now_add=True)
 
     class Meta:
