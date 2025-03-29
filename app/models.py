@@ -14,9 +14,22 @@ class User(models.Model):
     class Meta:
         db_table = "user"
 
-class History(models.Model):
-    id = models.AutoField("id",primary_key=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+class Sales(models.Model):
+    customer_id = models.CharField("顾客ID", max_length=255, primary_key=True)
+    age = models.IntegerField("年龄")
+    gender = models.CharField("性别", max_length=50)
+    city = models.CharField("城市", max_length=255)
+    category = models.CharField("类别", max_length=255)
+    product_name = models.CharField("产品名称", max_length=255)
+    purchase_date = models.DateField("购买日期")
+    purchase_amount = models.DecimalField("购买金额", max_digits=10, decimal_places=2)
+    payment_method = models.CharField("支付方式", max_length=255)
+    discount_applied = models.BooleanField("是否使用折扣")
+    rating = models.IntegerField("评分")
+    repeat_customer = models.BooleanField("是否回头客")
 
     class Meta:
-        db_table = "history"
+        verbose_name = "销售"
+        verbose_name_plural = "销售"
+        db_table = "sales"

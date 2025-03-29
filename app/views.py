@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from app.models import User,History
+from app.models import User
 from django.http import HttpResponse
 from app.utils import errorResponse
 
@@ -49,3 +49,26 @@ def home(request):
     return render(request,"home.html",{
         'userInfo':userInfo
     })
+
+def chargeSelfInfo(request):
+    username = request.session.get("username")
+    userInfo = User.objects.get(username = username)
+    return render(request,"chargeSelfInfo.html",{
+                  'userInfo':userInfo
+    })
+    # if request.method == "GET":
+    #     return render(request,"chargeSelfInfo.html",{
+    #         'userInfo':userInfo
+    #     })
+    # else:
+    #     username = request.POST.get("username")
+    #     password = request.POST.get("password")
+    #     confirmPassword = request.POST.get("confirmPassword")
+    #     if not username or not password or not confirmPassword:
+    #         return errorResponse.errorResponse(request,"用户名或密码不能为空")
+    #     if password != confirmPassword:
+    #         return errorResponse.errorResponse(request,"两次输入密码不一致")
+    #     userInfo.username = username
+    #     userInfo.password = password
+    #     userInfo.save()
+    #     return redirect("/app/home")
