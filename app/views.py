@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from app.models import User
 from django.http import HttpResponse
 from app.utils import errorResponse
-from app.utils import getHomeData
+from app.utils.getHomeData import getHomeData
 
 # Create your views here.
 def login(request):
