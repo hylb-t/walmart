@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from app.models import User
 from django.http import HttpResponse
 from app.utils import errorResponse
+from app.utils import getHomeData
 
 # Create your views here.
 def login(request):
@@ -43,12 +44,23 @@ def logOut(request):
     request.session.clear()
     return redirect("/app/login")
 
+
+
 def home(request):
     username = request.session.get("username")
     userInfo = User.objects.get(username = username)
+    highest_consumption_city = getHomeData.get_highest_consumption_city()
+    highest_consumption_city_by_total_spend = getHomeData.get_highest_consumption_city_by_total_spend()
+    most_common_product_category = getHomeData.get_most_common_product_category()
+
+
     return render(request,"home.html",{
-        'userInfo':userInfo
+        'userInfo':userInfo,
+        'highest_consumption_city': highest_consumption_city,
+        'highest_consumption_city_by_total_spend': highest_consumption_city_by_total_spend,
+        'most_common_product_category': most_common_product_category,
     })
+
 
 def chargeSelfInfo(request):
     username = request.session.get("username")
