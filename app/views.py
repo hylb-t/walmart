@@ -74,7 +74,11 @@ def home(request):
     most_common_product_category = getHomeData.get_most_common_product_category()
     top_10_cities_by_consumption = getHomeData.get_top_10_cities_by_consumption()
     sales_proportion_by_product_type = getHomeData.get_sales_proportion_by_product_type()
+    monthly_sales = getHomeData.get_monthly_sales()
+    year, month, day = getHomeData.getNowTime()
 
+    # 将数据序列化为 JSON 字符串，确保模板中能正确解析
+    top_10_cities_json = json.dumps(top_10_cities_by_consumption)
 
 
     return render(request, "home.html", {
@@ -84,6 +88,12 @@ def home(request):
         'most_common_product_category': most_common_product_category,
         'top_10_cities_by_consumption': top_10_cities_by_consumption,
         'sales_proportion_by_product_type': sales_proportion_by_product_type,
+        'monthly_sales': monthly_sales,
+        'nowTime': {
+            'year': year,
+            'month': month,
+            'day': day
+        }
     })
 
 

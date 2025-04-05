@@ -1,3 +1,4 @@
+import time
 from app.models import Sales
 from django.db.models import Sum, Count
 
@@ -23,18 +24,33 @@ class getHomeData:
 
     @staticmethod
     def get_top_10_cities_by_consumption():
-        top_10_cities = Sales.objects.values('city').annotate(total_spend=Sum('purchase_amount')).order_by(
-            '-total_spend')[:10]
-        # Convert Decimal to float
+        top_10_cities = Sales.objects.values('city').annotate(
+            total_spend=Sum('purchase_amount')
+        ).order_by('-total_spend')[:10]
+        # 将 Decimal 转换为 float 类型
         for city in top_10_cities:
             city['total_spend'] = float(city['total_spend'])
         return list(top_10_cities)
 
+    @staticmethod
+    def get_sales_proportion_by_product_type():
+        sales_proportion = Sales.objects.values('category').annotate(total_sales=Sum('purchase_amount')).order_by(
+            '-total_sales')
+        return sales_proportion
 
-@staticmethod
+    @staticmethod
+    def get_monthly_sales():
+        monthly_sales = Sales.objects.extra(select={'month': "EXTRACT(month FROM purchase_date)"}).values(
+            'month').annotate(total_sales=Sum('purchase_amount')).order_by('month')
+        # Convert Decimal to float
+        for sale in monthly_sales:
+            sale['total_sales'] = float(sale['total_sales'])
+        return list(monthly_sales)
 
-
-def get_sales_proportion_by_product_type():
-    sales_proportion = Sales.objects.values('category').annotate(total_sales=Sum('purchase_amount')).order_by(
-        '-total_sales')
-    return sales_proportion
+    @staticmethod
+    def getNowTime():
+        timeFormat = time.localtime()
+        year = timeFormat.tm_year
+        month = timeFormat.tm_mon
+        day = timeFormat.tm_mday
+        return year, month, day
