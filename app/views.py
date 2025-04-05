@@ -3,6 +3,7 @@ from app.models import User
 from django.http import HttpResponse
 from app.utils import errorResponse
 from app.utils.getHomeData import getHomeData
+import json
 
 # Create your views here.
 def login(request):
@@ -73,6 +74,7 @@ def home(request):
     most_common_product_category = getHomeData.get_most_common_product_category()
     top_10_cities_by_consumption = getHomeData.get_top_10_cities_by_consumption()
     sales_proportion_by_product_type = getHomeData.get_sales_proportion_by_product_type()
+
 
 
     return render(request, "home.html", {

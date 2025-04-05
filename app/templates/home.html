@@ -26,6 +26,9 @@
     <link href="/static/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="/static/vendor/simple-datatables/style.css" rel="stylesheet">
 
+    <!-- Chart.js -->
+    <script src="/static/echarts.js"></script>
+
     <!-- Template Main CSS File -->
     <link href="/static/css/style.css" rel="stylesheet">
 
@@ -359,7 +362,7 @@
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
                             var ctx = document.getElementById('topCitiesChart').getContext('2d');
-                            var topCitiesData = {{ top_10_cities_by_consumption|safe }};
+                            var topCitiesData = JSON.parse('{{ top_10_cities_by_consumption|safe }}'.replace(/&quot;/g, '"'));
                             var cities = topCitiesData.map(city => city.city);
                             var consumption = topCitiesData.map(city => city.total_spend);
 
@@ -385,6 +388,7 @@
                             });
                         });
                     </script>
+
 
                     {#                    <!-- Top Selling -->#}
                     {#                    <div class="col-12">#}
@@ -640,7 +644,7 @@
 
 <!-- Template Main JS File -->
 <script src="/static/js/main.js"></script>
-<script src="/static/echarts.js"></script>
+
 
 </body>
 

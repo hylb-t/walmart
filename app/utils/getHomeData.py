@@ -25,10 +25,16 @@ class getHomeData:
     def get_top_10_cities_by_consumption():
         top_10_cities = Sales.objects.values('city').annotate(total_spend=Sum('purchase_amount')).order_by(
             '-total_spend')[:10]
+        # Convert Decimal to float
+        for city in top_10_cities:
+            city['total_spend'] = float(city['total_spend'])
         return list(top_10_cities)
 
-    @staticmethod
-    def get_sales_proportion_by_product_type():
-        sales_proportion = Sales.objects.values('category').annotate(total_sales=Sum('purchase_amount')).order_by(
-            '-total_sales')
-        return sales_proportion
+
+@staticmethod
+
+
+def get_sales_proportion_by_product_type():
+    sales_proportion = Sales.objects.values('category').annotate(total_sales=Sum('purchase_amount')).order_by(
+        '-total_sales')
+    return sales_proportion
