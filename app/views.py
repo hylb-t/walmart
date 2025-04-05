@@ -46,26 +46,43 @@ def logOut(request):
 
 
 
+# def home(request):
+#     username = request.session.get("username")
+#     userInfo = User.objects.get(username = username)
+#     highest_consumption_city = getHomeData.get_highest_consumption_city()
+#     highest_consumption_city_by_total_spend = getHomeData.get_highest_consumption_city_by_total_spend()
+#     most_common_product_category = getHomeData.get_most_common_product_category()
+#     top_10_cities_by_consumption = getHomeData.get_top_10_cities_by_consumption()
+#     low_rating_orders_analysis = getHomeData.get_low_rating_orders_analysis()
+#
+#
+#     return render(request,"home.html",{
+#         'userInfo':userInfo,
+#         'highest_consumption_city': highest_consumption_city,
+#         'highest_consumption_city_by_total_spend': highest_consumption_city_by_total_spend,
+#         'most_common_product_category': most_common_product_category,
+#         'top_10_cities_by_consumption': top_10_cities_by_consumption,
+#         'low_rating_orders_analysis': low_rating_orders_analysis,
+#     })
+
 def home(request):
     username = request.session.get("username")
-    userInfo = User.objects.get(username = username)
+    userInfo = User.objects.get(username=username)
     highest_consumption_city = getHomeData.get_highest_consumption_city()
     highest_consumption_city_by_total_spend = getHomeData.get_highest_consumption_city_by_total_spend()
     most_common_product_category = getHomeData.get_most_common_product_category()
     top_10_cities_by_consumption = getHomeData.get_top_10_cities_by_consumption()
-    low_rating_orders_analysis = getHomeData.get_low_rating_orders_analysis()
+    sales_proportion_by_product_type = getHomeData.get_sales_proportion_by_product_type()
 
 
-    return render(request,"home.html",{
-        'userInfo':userInfo,
+    return render(request, "home.html", {
+        'userInfo': userInfo,
         'highest_consumption_city': highest_consumption_city,
         'highest_consumption_city_by_total_spend': highest_consumption_city_by_total_spend,
         'most_common_product_category': most_common_product_category,
         'top_10_cities_by_consumption': top_10_cities_by_consumption,
-        'low_rating_orders_analysis': low_rating_orders_analysis,
+        'sales_proportion_by_product_type': sales_proportion_by_product_type,
     })
-
-
 
 
 def chargeSelfInfo(request):
