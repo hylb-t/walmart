@@ -1,4 +1,7 @@
 import time
+
+from django.db.models.functions import ExtractYear, ExtractMonth
+
 from app.models import Sales
 from django.db.models import Sum, Count
 
@@ -40,12 +43,23 @@ class getHomeData:
 
     @staticmethod
     def get_monthly_sales():
-        monthly_sales = Sales.objects.extra(select={'month': "EXTRACT(month FROM purchase_date)"}).values(
-            'month').annotate(total_sales=Sum('purchase_amount')).order_by('month')
-        # Convert Decimal to float
+        # 同时提取年份和月份
+        monthly_sales = Sales.objects.annotate(
+            year=ExtractYear('purchase_date'),
+            month=ExtractMonth('purchase_date')
+        ).values('year', 'month').annotate(
+            total_sales=Sum('purchase_amount')
+        ).order_by('year', 'month')
+
+        # 格式化为"YYYY-MM"并转换Decimal
+        formatted_sales = []
         for sale in monthly_sales:
-            sale['total_sales'] = float(sale['total_sales'])
-        return list(monthly_sales)
+            formatted_month = f"{sale['year']}-{sale['month']:02d}"  # 补零
+            formatted_sales.append({
+                'month': formatted_month,
+                'total_sales': float(sale['total_sales'])
+            })
+        return formatted_sales
 
     @staticmethod
     def getNowTime():

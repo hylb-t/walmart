@@ -410,12 +410,20 @@
                         </div>
                     </div>
 
+                    {{ monthly_sales|json_script:"monthlySalesData" }}
+
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
+                            // 从json_script标签获取数据
+                            var monthlySalesData = JSON.parse(document.getElementById('monthlySalesData').textContent);
                             var ctx = document.getElementById('monthlySalesChart').getContext('2d');
-                            var monthlySalesData = JSON.parse('{{ monthly_sales|safe }}'.replace(/&quot;/g, '\"'));
                             var months = monthlySalesData.map(sale => sale.month);
                             var sales = monthlySalesData.map(sale => sale.total_sales);
+
+                            // 创建渐变效果
+                            var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                            gradient.addColorStop(0, '#A9F387');
+                            gradient.addColorStop(1, '#48D8BF');
 
                             new Chart(ctx, {
                                 type: 'line',
@@ -424,15 +432,42 @@
                                     datasets: [{
                                         label: 'Total Sales',
                                         data: sales,
-                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        borderWidth: 1
+                                        borderColor: gradient,
+                                        borderWidth: 4,
+                                        pointRadius: 8,
+                                        pointBackgroundColor: '#fff',
+                                        pointBorderColor: '#A9F387',
+                                        pointBorderWidth: 2,
+                                        tension: 0.4,  // 平滑曲线
+                                        fill: false
                                     }]
                                 },
                                 options: {
+                                    responsive: true,
                                     scales: {
+                                        x: {
+                                            grid: {
+                                                display: false
+                                            },
+                                            ticks: {
+                                                autoSkip: true,
+                                                maxTicksLimit: 6  // 最多显示6个月份标签
+                                            }
+                                        },
                                         y: {
-                                            beginAtZero: true
+                                            beginAtZero: true,
+                                            grid: {
+                                                color: '#DDD',
+                                                lineWidth: 1,
+                                                drawBorder: false
+                                            }
+                                        }
+                                    },
+                                    plugins: {
+                                        tooltip: {
+                                            enabled: true,
+                                            mode: 'index',
+                                            intersect: false
                                         }
                                     }
                                 }
