@@ -414,7 +414,7 @@
 
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
-                            // 从json_script标签获取数据
+                            // 获取数据和上下文
                             var monthlySalesData = JSON.parse(document.getElementById('monthlySalesData').textContent);
                             var ctx = document.getElementById('monthlySalesChart').getContext('2d');
                             var months = monthlySalesData.map(sale => sale.month);
@@ -425,8 +425,41 @@
                             gradient.addColorStop(0, '#A9F387');
                             gradient.addColorStop(1, '#48D8BF');
 
+                            // 自定义垂直虚线插件
+                            const verticalLinePlugin = {
+                                id: 'verticalLine',
+                                afterInit: (chart) => {
+                                    chart.verticalLine = {x: null};
+                                },
+                                afterEvent: (chart, e) => {
+                                    const {x, y} = e.event;
+                                    if (x >= 0 && x <= chart.width && y >= 0 && y <= chart.height) {
+                                        chart.verticalLine.x = x;
+                                    } else {
+                                        chart.verticalLine.x = null;
+                                    }
+                                    chart.draw();
+                                },
+                                beforeDraw: (chart) => {
+                                    if (chart.verticalLine.x !== null) {
+                                        const ctx = chart.ctx;
+                                        ctx.save();
+                                        ctx.beginPath();
+                                        ctx.setLineDash([5, 5]);
+                                        ctx.moveTo(chart.verticalLine.x, 0);
+                                        ctx.lineTo(chart.verticalLine.x, chart.height);
+                                        ctx.strokeStyle = '#999';
+                                        ctx.lineWidth = 1;
+                                        ctx.stroke();
+                                        ctx.restore();
+                                    }
+                                }
+                            };
+
+                            // 创建图表
                             new Chart(ctx, {
                                 type: 'line',
+                                plugins: [verticalLinePlugin],
                                 data: {
                                     labels: months,
                                     datasets: [{
@@ -438,12 +471,25 @@
                                         pointBackgroundColor: '#fff',
                                         pointBorderColor: '#A9F387',
                                         pointBorderWidth: 2,
-                                        tension: 0.4,  // 平滑曲线
+                                        tension: 0.4,
                                         fill: false
                                     }]
                                 },
                                 options: {
                                     responsive: true,
+                                    interaction: {
+                                        mode: 'index',
+                                        intersect: false
+                                    },
+                                    plugins: {
+                                        legend: {
+                                            onClick: (e) => e.native?.stopPropagation() // 禁用图例点击
+                                        },
+                                        tooltip: {
+                                            enabled: true,
+                                            position: 'nearest'
+                                        }
+                                    },
                                     scales: {
                                         x: {
                                             grid: {
@@ -451,7 +497,7 @@
                                             },
                                             ticks: {
                                                 autoSkip: true,
-                                                maxTicksLimit: 6  // 最多显示6个月份标签
+                                                maxTicksLimit: 6
                                             }
                                         },
                                         y: {
@@ -461,13 +507,6 @@
                                                 lineWidth: 1,
                                                 drawBorder: false
                                             }
-                                        }
-                                    },
-                                    plugins: {
-                                        tooltip: {
-                                            enabled: true,
-                                            mode: 'index',
-                                            intersect: false
                                         }
                                     }
                                 }
