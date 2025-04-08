@@ -9,7 +9,7 @@ class User(models.Model):
     address = models.CharField("地址",max_length=255,default='')
     avatar = models.CharField("头像",max_length=255,default='avatar/default.jpg')
     textarea = models.TextField("个性签名",max_length=255,default='这个人很懒，什么都没有留下')
-    creatname = models.DateField("创建时间", auto_now_add=True)
+    creatTime = models.DateField("创建时间", auto_now_add=True)
 
     class Meta:
         db_table = "user"

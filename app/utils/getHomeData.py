@@ -1,12 +1,11 @@
 import time
-
 from django.db.models.functions import ExtractYear, ExtractMonth
-
-from app.models import Sales
+from app.models import Sales, User
 from django.db.models import Sum, Count
 
 
 class getHomeData:
+
     @staticmethod
     def get_highest_consumption_city():
         highest_consumption_city = Sales.objects.values('city').annotate(total_spend=Sum('purchase_amount')).order_by(
@@ -68,3 +67,22 @@ class getHomeData:
         month = timeFormat.tm_mon
         day = timeFormat.tm_mday
         return year, month, day
+
+
+    @staticmethod
+    def getUserCreateTimeData():
+        userData = User.objects.all()
+        dataDic = {}
+        for user in userData:
+            if dataDic.get(str(user.createTime),-1) == -1:
+                dataDic[str(user.createTime)] = 1
+            else:
+                dataDic[str(user.createTime)] += 1
+
+        resultData = []
+        for key, value in dataDic.items():
+            resultData.append({
+                'name': key,
+                'value': value
+            })
+        return resultData

@@ -28,8 +28,6 @@
 
     <!-- Chart.js -->
     <script src="/static/vendor/chart.js"></script>
-    <!-- 引入 Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
 
     <!-- Template Main CSS File -->
@@ -148,47 +146,47 @@
             </ul>
         </li><!-- End Forms Nav -->
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i
-                    class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="tables-general.html">
-                        <i class="bi bi-circle"></i><span>General Tables</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="tables-data.html">
-                        <i class="bi bi-circle"></i><span>Data Tables</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Tables Nav -->
+        {#        <li class="nav-item">#}
+        {#            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">#}
+        {#                <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i#}
+        {#                    class="bi bi-chevron-down ms-auto"></i>#}
+        {#            </a>#}
+        {#            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">#}
+        {#                <li>#}
+        {#                    <a href="tables-general.html">#}
+        {#                        <i class="bi bi-circle"></i><span>General Tables</span>#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#                <li>#}
+        {#                    <a href="tables-data.html">#}
+        {#                        <i class="bi bi-circle"></i><span>Data Tables</span>#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#            </ul>#}
+        {#        </li><!-- End Tables Nav -->#}
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="charts-chartjs.html">
-                        <i class="bi bi-circle"></i><span>Chart.js</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-apexcharts.html">
-                        <i class="bi bi-circle"></i><span>ApexCharts</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="charts-echarts.html">
-                        <i class="bi bi-circle"></i><span>ECharts</span>
-                    </a>
-                </li>
-            </ul>
-        </li><!-- End Charts Nav -->
+        {#        <li class="nav-item">#}
+        {#            <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">#}
+        {#                <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>#}
+        {#            </a>#}
+        {#            <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">#}
+        {#                <li>#}
+        {#                    <a href="charts-chartjs.html">#}
+        {#                        <i class="bi bi-circle"></i><span>Chart.js</span>#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#                <li>#}
+        {#                    <a href="charts-apexcharts.html">#}
+        {#                        <i class="bi bi-circle"></i><span>ApexCharts</span>#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#                <li>#}
+        {#                    <a href="charts-echarts.html">#}
+        {#                        <i class="bi bi-circle"></i><span>ECharts</span>#}
+        {#                    </a>#}
+        {#                </li>#}
+        {#            </ul>#}
+        {#        </li><!-- End Charts Nav -->#}
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -359,6 +357,21 @@
                     </div><!-- End Customers Card -->
 
 
+                    <!-- Budget Report -->
+                    <div class="card">
+
+
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">用户创建时间占比分布</h5>
+
+                            <div id="mainsTwo" style="width: 100%;height: 450px"; ></div>
+
+
+
+                        </div>
+                    </div><!-- End Budget Report -->
+
+
                     <!-- Top10的城市消费金额    -->
                     <div class="col-12">
                         <div class="card">
@@ -402,6 +415,9 @@
                         });
                     </script>
 
+
+
+
                     <!-- 月销售额变化曲线（折线图） -->
                     <div class="col-12">
                         <div class="card">
@@ -422,10 +438,10 @@
                             var months = monthlySalesData.map(sale => sale.month);
                             var sales = monthlySalesData.map(sale => sale.total_sales);
 
-                            // 创建渐变效果
+                            // 创建稍深蓝色渐变效果
                             var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                            gradient.addColorStop(0, '#A9F387');
-                            gradient.addColorStop(1, '#48D8BF');
+                            gradient.addColorStop(0, '#3d93d6'); // 稍深的起始颜色
+                            gradient.addColorStop(1, '#009ee0'); // 稍深的结束颜色
 
                             // 自定义垂直虚线插件
                             const verticalLinePlugin = {
@@ -468,10 +484,10 @@
                                         label: 'Total Sales',
                                         data: sales,
                                         borderColor: gradient,
-                                        borderWidth: 4,
-                                        pointRadius: 8,
-                                        pointBackgroundColor: '#fff',
-                                        pointBorderColor: '#A9F387',
+                                        borderWidth: 5,              // 略加粗曲线
+                                        pointRadius: 6,             // 增大节点
+                                        pointBackgroundColor: '#fff', // 节点填充为白色
+                                        pointBorderColor: '#3d93d6',   // 节点边框使用稍深的起始色
                                         pointBorderWidth: 2,
                                         tension: 0.4,
                                         fill: false
@@ -514,6 +530,7 @@
                                 }
                             });
                         });
+
                     </script>
 
                     <!-- Top Selling -->
@@ -759,6 +776,9 @@
 
 <!-- Template Main JS File -->
 <script src="/static/js/main.js"></script>
+
+<!-- Chart.js -->
+<script src="/static/vendor/chart.js"></script>
 <script src="/static/echarts.js"></script>
 
 

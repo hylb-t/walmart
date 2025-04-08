@@ -74,6 +74,7 @@ def home(request):
     most_common_product_category = getHomeData.get_most_common_product_category()
     top_10_cities_by_consumption = getHomeData.get_top_10_cities_by_consumption()
     sales_proportion_by_product_type = getHomeData.get_sales_proportion_by_product_type()
+    userBarCharData = getHomeData.getUserCreateTimeData(),
     monthly_sales = getHomeData.get_monthly_sales()
     year, month, day = getHomeData.getNowTime()
 
@@ -88,6 +89,7 @@ def home(request):
         'most_common_product_category': most_common_product_category,
         'top_10_cities_by_consumption': top_10_cities_by_consumption,
         'sales_proportion_by_product_type': sales_proportion_by_product_type,
+        'userBarCharData': userBarCharData,
         'monthly_sales': monthly_sales,
         'nowTime': {
             'year': year,
