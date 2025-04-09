@@ -13,7 +13,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'home' %}">个人信息</a></li>
-                    <li class="breadcrumb-item active">修改个人信息</li>
+                    <li class="breadcrumb-item active">修改个人信息页面</li>
                 </ol>
             </nav>
         </div>
@@ -21,6 +21,85 @@
             {{ nowTime.year }}-{{ nowTime.month }}-{{ nowTime.day }}
         </h5>
     </div>
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Right side columns -->
+            <div class="col-lg-12">
+
+                <!-- 销售额比例饼图 -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">修改个人信息</h5>
+                        <div class="activity">
+
+                            <form action="{% url 'chargeSelfInfo' %}" method="post" enctype="multipart/form-data">
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">用户名</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="username" disabled value="{{ userInfo.username }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">地址</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="address" value="{{ userInfo.address }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">性别</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" name="sex" aria-label="Default select example">
+                                            <option value="" {% if not userInfo.sex %}selected{% endif %}></option>
+                                            <option value="男" {% if userInfo.sex == "男" %}selected{% endif %}>男</option>
+                                            <option value="女" {% if userInfo.sex == "女" %}selected{% endif %}>女</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="inPutText" class="col-sm-2 col-form-label">个人简介</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" placeholder="{{ userInfo.textarea }}"
+                                                  style="height: 100px"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label">头像上传</label>
+                                    <div class="col-sm-10">
+                                        <img src="/media/{{ userInfo.avatar }}" alt="头像"
+                                             style="width: 100px; height: 100px;border: 1px solid #ddd;padding: 5px">
+                                        <br>
+                                        <input type="file" name="avatar" class="form-control" id="inputText">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
 
 {% endblock %}
 
