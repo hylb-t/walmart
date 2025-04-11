@@ -81,10 +81,11 @@
                                     <div class="row mb-3">
                                         <label for="inputText" class="col-sm-2 col-form-label">头像上传</label>
                                         <div class="col-sm-10">
+
                                             <!-- 显示当前头像，支持默认头像 -->
                                             <img id="avatarPreview"
-                                                 src="{% if userInfo.avatar %}/media/
-                                                     {{ userInfo.avatar }}{% else %}/media/avatar/default.jpg{% endif %}"
+                                                 src="
+                                                         {% if userInfo.avatar %}{{ userInfo.avatar.url }}{% else %}/media/avatar/default.jpg{% endif %}"
                                                  alt="头像"
                                                  style="width: 100px; height: 100px; border: 1px solid #ddd; padding: 5px;">
 
@@ -101,6 +102,7 @@
                                     </div>
                                 </form>
 
+
                                 <script>
                                     // 实现头像预览功能
                                     function previewAvatar(event) {
@@ -108,12 +110,7 @@
                                         preview.src = URL.createObjectURL(event.target.files[0]);
                                     }
                                 </script>
-                                {#                                <div class="row mb-3">#}
-                                {#                                    <label for="inputText" class="col-sm-2 col-form-label"></label>#}
-                                {#                                    <div class="col-sm-10">#}
-                                {#                                        <button type="submit" class="btn btn-primary">提交</button>#}
-                                {#                                    </div>#}
-                                {#                                </div>#}
+
                             </form>
 
                         </div>

@@ -6,7 +6,6 @@ from app.utils.getHomeData import getHomeData
 import json
 
 
-# Create your views here.
 def login(request):
     if request.method == "GET":
         return render(request, "login.html")
@@ -14,15 +13,14 @@ def login(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         try:
-            User.objects.get(username=username, password=password)
-            request.session["username"] = username
-            return redirect("/app/home")
-        except:
+            user = User.objects.get(username=username)
+            if user.password == password:
+                request.session["username"] = username
+                return redirect("/app/home")
+            else:
+                return errorResponse.errorResponse(request, "密码错误")
+        except User.DoesNotExist:
             return errorResponse.errorResponse(request, "用户名不存在")
-        if user.password == password:
-            request.session["username"] = username
-            return redirect("/app/index")
-        return errorResponse.errorResponse(request, "密码错误")
 
 
 def register(request):
