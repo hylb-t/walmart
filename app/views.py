@@ -49,25 +49,6 @@ def logOut(request):
     return redirect("/app/login")
 
 
-# def home(request):
-#     username = request.session.get("username")
-#     userInfo = User.objects.get(username = username)
-#     highest_consumption_city = getHomeData.get_highest_consumption_city()
-#     highest_consumption_city_by_total_spend = getHomeData.get_highest_consumption_city_by_total_spend()
-#     most_common_product_category = getHomeData.get_most_common_product_category()
-#     top_10_cities_by_consumption = getHomeData.get_top_10_cities_by_consumption()
-#     low_rating_orders_analysis = getHomeData.get_low_rating_orders_analysis()
-#
-#
-#     return render(request,"home.html",{
-#         'userInfo':userInfo,
-#         'highest_consumption_city': highest_consumption_city,
-#         'highest_consumption_city_by_total_spend': highest_consumption_city_by_total_spend,
-#         'most_common_product_category': most_common_product_category,
-#         'top_10_cities_by_consumption': top_10_cities_by_consumption,
-#         'low_rating_orders_analysis': low_rating_orders_analysis,
-#     })
-
 def home(request):
     username = request.session.get("username")
     userInfo = User.objects.get(username=username)
@@ -103,7 +84,7 @@ def chargeSelfInfo(request):
     userInfo = User.objects.get(username=username)
     year, month, day = getHomeData.getNowTime()
     if request.method == "POST":
-        getChangeSelfInfoData.changeSelfInfo(username,request.POST, request.FILES)
+        getChangeSelfInfoData.changeSelfInfo(username, request.POST, request.FILES)
 
     return render(request, "chargeSelfInfo.html", {
         'userInfo': userInfo,
@@ -113,19 +94,3 @@ def chargeSelfInfo(request):
             'day': day
         }
     })
-    # if request.method == "GET":
-    #     return render(request,"chargeSelfInfo.html",{
-    #         'userInfo':userInfo
-    #     })
-    # else:
-    #     username = request.POST.get("username")
-    #     password = request.POST.get("password")
-    #     confirmPassword = request.POST.get("confirmPassword")
-    #     if not username or not password or not confirmPassword:
-    #         return errorResponse.errorResponse(request,"用户名或密码不能为空")
-    #     if password != confirmPassword:
-    #         return errorResponse.errorResponse(request,"两次输入密码不一致")
-    #     userInfo.username = username
-    #     userInfo.password = password
-    #     userInfo.save()
-    #     return redirect("/app/home")

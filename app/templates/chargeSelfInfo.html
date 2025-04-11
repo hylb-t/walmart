@@ -69,7 +69,9 @@
                                 <div class="row mb-3">
                                     <label for="inPutText" class="col-sm-2 col-form-label">个人简介</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" placeholder="{{ userInfo.textarea }}"
+                                        <textarea name="textarea" class="form-control"
+                                                  placeholder="{{ userInfo.textarea }}"
+                                                  value="{{ userInfo.textarea }}"
                                                   style="height: 100px"></textarea>
                                     </div>
                                 </div>
@@ -85,6 +87,7 @@
                                                      {{ userInfo.avatar }}{% else %}/media/avatar/default.jpg{% endif %}"
                                                  alt="头像"
                                                  style="width: 100px; height: 100px; border: 1px solid #ddd; padding: 5px;">
+
                                             <br>
                                             <!-- 文件上传输入框 -->
                                             <input type="file" name="avatar" id="avatarInput" class="form-control"
