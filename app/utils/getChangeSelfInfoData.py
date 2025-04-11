@@ -65,3 +65,15 @@ def changeSelfInfo(username, formData, file):
     #
     # # 保存用户信息
     # user.save()
+
+def getChangePassword(userInfo, passwordInfo):
+    oldPwd = passwordInfo['oldPassword']
+    newPwd = passwordInfo['newPassword']
+    newPwdConfirm = passwordInfo['newPasswordConfirm']
+    user = User.objects.get(username=userInfo.username)
+    if oldPwd != userInfo.password:
+        return "原始密码错误"
+    if newPwd != newPwdConfirm:
+        return "两次密码不一致"
+    user.password = newPwd
+    user.save()

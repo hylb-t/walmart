@@ -92,3 +92,21 @@ def chargeSelfInfo(request):
             'day': day
         }
     })
+
+def changePassword(request):
+    username = request.session.get("username")
+    userInfo = User.objects.get(username=username)
+    year, month, day = getHomeData.getNowTime()
+    if request.method == "POST":
+        res = getChangeSelfInfoData.getChangePassword(userInfo,request.POST)
+        if res != None:
+            return errorResponse.errorResponse(request,res)
+
+    return render(request, "changePassword.html", {
+        'userInfo': userInfo,
+        'nowTime': {
+            'year': year,
+            'month': month,
+            'day': day
+        }
+    })

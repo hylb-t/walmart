@@ -76,6 +76,7 @@
                                     </div>
                                 </div>
 
+
                                 <form action="{% url 'chargeSelfInfo' %}" method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <div class="row mb-3">
@@ -85,6 +86,8 @@
                                             <!-- 显示当前头像，支持默认头像 -->
                                             <img id="avatarPreview"
                                                  src="
+
+
                                                          {% if userInfo.avatar %}{{ userInfo.avatar.url }}{% else %}/media/avatar/default.jpg{% endif %}"
                                                  alt="头像"
                                                  style="width: 100px; height: 100px; border: 1px solid #ddd; padding: 5px;">
