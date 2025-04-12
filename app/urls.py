@@ -8,5 +8,7 @@ urlpatterns = [
     path('logOut/', views.logOut, name='logOut'),
     path('chargeSelfInfo/', views.chargeSelfInfo, name='chargeSelfInfo'),
     path("changePassword/", views.changePassword, name="changePassword"),
+    path("cityCloud/", views.cityCloud, name="cityCloud"),
+    path("commodityCloud/", views.commodityCloud, name="commodityCloud"),
     path("home/", views.home, name="home"),
 ]

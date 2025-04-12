@@ -110,3 +110,29 @@ def changePassword(request):
             'day': day
         }
     })
+
+def commodityCloud(request):
+    username = request.session.get("username")
+    userInfo = User.objects.get(username=username)
+    year, month, day = getHomeData.getNowTime()
+    return render(request, "commodityCloud.html", {
+        'userInfo': userInfo,
+        'nowTime': {
+            'year': year,
+            'month': month,
+            'day': day
+        }
+    })
+
+def cityCloud(request):
+    username = request.session.get("username")
+    userInfo = User.objects.get(username=username)
+    year, month, day = getHomeData.getNowTime()
+    return render(request, "cityCloud.html", {
+        'userInfo': userInfo,
+        'nowTime': {
+            'year': year,
+            'month': month,
+            'day': day
+        }
+    })
